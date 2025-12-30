@@ -326,14 +326,14 @@
             return;
         }
 
-        addMessage('📸 Capturing artboard...', 'system');
+        addMessage('<span class="spectrum-icon"><svg viewBox="0 0 24 24"><path d="M9.4 10.5l4.77-8.26C13.47 2.09 12.75 2 12 2c-2.4 0-4.6.85-6.32 2.25l3.66 6.35.06-.1zM21.54 9c-.92-2.92-3.15-5.26-6-6.34L11.88 9h9.66zm.26 1h-7.49l.29.5 4.76 8.25C21 16.97 22 14.61 22 12c0-.69-.07-1.35-.2-2zM8.54 12l-3.9-6.75C3.01 7.03 2 9.39 2 12c0 .69.07 1.35.2 2h7.49l-1.15-2zm-6.08 3c.92 2.92 3.15 5.26 6 6.34L12.12 15H2.46zm11.27 0l-3.9 6.76c.7.15 1.42.24 2.17.24 2.4 0 4.6-.85 6.32-2.25l-3.66-6.35-.93 1.6z"/></svg></span> Capturing artboard...', 'system');
 
         csInterface.evalScript('captureArtboard()', (result) => {
             try {
                 const data = JSON.parse(result);
                 if (data.success) {
                     currentArtboardImage = data.imageData;
-                    addMessage('✅ Artboard captured! You can now ask questions about it.', 'system');
+                    addMessage('<span class="spectrum-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></span> Artboard captured! Ready to analyze.', 'system success');
                 } else {
                     showError('Failed to capture artboard: ' + (data.error || 'Unknown error'));
                 }
@@ -350,14 +350,14 @@
             return;
         }
 
-        addMessage('📸 Capturing selection...', 'system');
+        addMessage('<span class="spectrum-icon"><svg viewBox="0 0 24 24"><path d="M3 5h2V3c-1.1 0-2 .9-2 2zm0 8h2v-2H3v2zm4 8h2v-2H7v2zM3 9h2V7H3v2zm10-6h-2v2h2V3zm6 0v2h2c0-1.1-.9-2-2-2zM5 21v-2H3c0 1.1.9 2 2 2zm-2-4h2v-2H3v2zM9 3H7v2h2V3zm2 18h2v-2h-2v2zm8-8h2v-2h-2v2zm0 8c1.1 0 2-.9 2-2h-2v2zm0-12h2V7h-2v2zm0 8h2v-2h-2v2zm-4 4h2v-2h-2v2zm0-16h2V3h-2v2z"/></svg></span> Capturing selection...', 'system');
 
         csInterface.evalScript('captureSelection()', (result) => {
             try {
                 const data = JSON.parse(result);
                 if (data.success) {
                     currentArtboardImage = data.imageData;
-                    addMessage('✅ Selection captured! You can now ask questions about it.', 'system');
+                    addMessage('<span class="spectrum-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></span> Selection captured! Ready to analyze.', 'system success');
                 } else {
                     if (data.error && data.error.includes('No items selected')) {
                         showError('Please select something on the artboard first.');
@@ -477,7 +477,7 @@
 
     // Place image on artboard using CEP file system API
     function placeImageOnArtboard(base64Data) {
-        addMessage('📥 Placing image on artboard...', 'system');
+        addMessage('<span class="spectrum-icon"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></span> Placing image on artboard...', 'system');
         
         // Get userData directory path
         let userDataPath = csInterface.getSystemPath('userData');
@@ -528,7 +528,7 @@
             try {
                 const data = JSON.parse(result);
                 if (data.success) {
-                    addMessage('✅ Image placed on artboard!', 'system');
+                    addMessage('<span class="spectrum-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></span> Image placed on artboard!', 'system success');
                 } else {
                     console.error('Placement failed:', data.error);
                     showError('Placement failed: ' + data.error);
@@ -572,7 +572,7 @@
             elements.sendBtn.textContent = 'Send';
             elements.userInput.focus();
         } else {
-            elements.sendBtn.innerHTML = '<span class="loading"></span>';
+            elements.sendBtn.innerHTML = '<span class="spectrum-loader"></span>';
         }
     }
 

@@ -5,6 +5,75 @@
   <meta charset="utf-8">
   <title>AI Design Assistant</title>
   <style>
+    /* ============================================
+       Adobe Spectrum Design Tokens
+       ============================================ */
+    :root {
+      /* Gray Scale - Adobe Spectrum Dark Theme */
+      --spectrum-gray-50: #1e1e1e;
+      --spectrum-gray-75: #252525;
+      --spectrum-gray-100: #2c2c2c;
+      --spectrum-gray-200: #363636;
+      --spectrum-gray-300: #464646;
+      --spectrum-gray-400: #5c5c5c;
+      --spectrum-gray-500: #737373;
+      --spectrum-gray-600: #909090;
+      --spectrum-gray-700: #aeaeae;
+      --spectrum-gray-800: #cfcfcf;
+      --spectrum-gray-900: #f0f0f0;
+
+      /* Accent Colors */
+      --spectrum-blue-400: #2680eb;
+      --spectrum-blue-500: #1473e6;
+      --spectrum-blue-600: #0d66d0;
+      --spectrum-green-400: #2d9d78;
+      --spectrum-green-500: #268e6c;
+      --spectrum-red-400: #e34850;
+      --spectrum-red-500: #d7373f;
+      --spectrum-orange-400: #e68619;
+      --spectrum-purple-400: #9256d9;
+
+      /* Semantic Colors */
+      --spectrum-bg-base: var(--spectrum-gray-50);
+      --spectrum-bg-layer-1: var(--spectrum-gray-75);
+      --spectrum-bg-layer-2: var(--spectrum-gray-100);
+      --spectrum-border-color: var(--spectrum-gray-300);
+      --spectrum-border-color-hover: var(--spectrum-gray-400);
+      --spectrum-text-primary: var(--spectrum-gray-900);
+      --spectrum-text-secondary: var(--spectrum-gray-700);
+      --spectrum-text-muted: var(--spectrum-gray-500);
+      --spectrum-accent: var(--spectrum-orange-400);
+      --spectrum-accent-hover: #d97a00;
+
+      /* Typography */
+      --spectrum-font-family: 'Adobe Clean', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --spectrum-font-size-xs: 11px;
+      --spectrum-font-size-sm: 12px;
+      --spectrum-font-size-md: 13px;
+      --spectrum-font-size-lg: 14px;
+
+      /* Spacing */
+      --spectrum-spacing-xs: 4px;
+      --spectrum-spacing-sm: 8px;
+      --spectrum-spacing-md: 12px;
+      --spectrum-spacing-lg: 16px;
+      --spectrum-spacing-xl: 24px;
+
+      /* Border Radius */
+      --spectrum-radius-sm: 4px;
+      --spectrum-radius-md: 6px;
+
+      /* Transitions */
+      --spectrum-transition-fast: 0.13s ease-out;
+      --spectrum-transition-normal: 0.2s ease-out;
+
+      /* Focus Ring - Subtle gray for premium look */
+      --spectrum-focus-ring: 0 0 0 1px var(--spectrum-gray-500);
+    }
+
+    /* ============================================
+       Base Styles
+       ============================================ */
     * {
       margin: 0;
       padding: 0;
@@ -12,248 +81,385 @@
     }
 
     body {
-      font-family: 'Adobe Clean', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #1E1E1E;
-      color: #E8E8E8;
+      font-family: var(--spectrum-font-family);
+      background: var(--spectrum-bg-base);
+      color: var(--spectrum-text-primary);
       height: 100vh;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      font-size: var(--spectrum-font-size-sm);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .header {
-      background: #2D2D2D;
-      padding: 8px 12px;
-      border-bottom: 1px solid #3A3A3A;
-      display: flex;
-      justify-content: flex-end;
+    /* ============================================
+       Spectrum Icons (Inline SVG System)
+       ============================================ */
+    .spectrum-icon {
+      display: inline-flex;
       align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .spectrum-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .spectrum-icon--sm svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .spectrum-icon--lg svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* ============================================
+       Header
+       ============================================ */
+    .header {
+      background: var(--spectrum-bg-layer-1);
+      padding: var(--spectrum-spacing-sm) var(--spectrum-spacing-md);
+      border-bottom: 1px solid var(--spectrum-border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 40px;
+    }
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      gap: var(--spectrum-spacing-sm);
+      color: var(--spectrum-text-secondary);
+      font-size: var(--spectrum-font-size-xs);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .header-title .spectrum-icon {
+      color: var(--spectrum-accent);
     }
 
     .header-actions {
       display: flex;
-      gap: 4px;
+      gap: var(--spectrum-spacing-xs);
     }
 
-    .icon-btn {
+    /* ============================================
+       Action Buttons (Spectrum Style)
+       ============================================ */
+    .action-btn {
       width: 28px;
       height: 28px;
       background: transparent;
       border: none;
-      color: #B8B8B8;
+      color: var(--spectrum-text-secondary);
       cursor: pointer;
-      border-radius: 2px;
+      border-radius: var(--spectrum-radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.15s;
+      transition: all var(--spectrum-transition-fast);
+      position: relative;
     }
 
-    .icon-btn:hover {
-      background: #3A3A3A;
-      color: #E8E8E8;
+    .action-btn:hover {
+      background: var(--spectrum-gray-200);
+      color: var(--spectrum-text-primary);
     }
 
-    .icon-btn svg {
-      width: 16px;
-      height: 16px;
+    .action-btn:active {
+      background: var(--spectrum-gray-300);
     }
 
+    .action-btn:focus-visible {
+      outline: none;
+      box-shadow: var(--spectrum-focus-ring);
+    }
+
+    .action-btn--primary {
+      background: var(--spectrum-accent);
+      color: white;
+    }
+
+    .action-btn--primary:hover {
+      background: var(--spectrum-accent-hover);
+      color: white;
+    }
+
+    /* ============================================
+       Chat Container
+       ============================================ */
     .chat-container {
       flex: 1;
       overflow-y: auto;
-      padding: 12px;
+      padding: var(--spectrum-spacing-md);
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      background: #1E1E1E;
+      gap: var(--spectrum-spacing-sm);
+      background: var(--spectrum-bg-base);
     }
 
+    /* Custom Scrollbar - Adobe Style */
     .chat-container::-webkit-scrollbar {
-      width: 12px;
+      width: 8px;
     }
 
     .chat-container::-webkit-scrollbar-track {
-      background: #1E1E1E;
+      background: transparent;
     }
 
     .chat-container::-webkit-scrollbar-thumb {
-      background: #3A3A3A;
-      border-radius: 0;
+      background: var(--spectrum-gray-300);
+      border-radius: 4px;
     }
 
     .chat-container::-webkit-scrollbar-thumb:hover {
-      background: #4A4A4A;
+      background: var(--spectrum-gray-400);
     }
 
+    /* ============================================
+       Messages
+       ============================================ */
     .message {
       max-width: 85%;
-      padding: 8px 10px;
-      border-radius: 2px;
-      line-height: 1.4;
-      font-size: 12px;
+      padding: var(--spectrum-spacing-sm) var(--spectrum-spacing-md);
+      border-radius: var(--spectrum-radius-md);
+      line-height: 1.5;
+      font-size: var(--spectrum-font-size-sm);
       word-wrap: break-word;
-      animation: fadeIn 0.2s ease-in;
+      animation: messageSlideIn 0.2s ease-out;
     }
 
-    @keyframes fadeIn {
+    @keyframes messageSlideIn {
       from {
         opacity: 0;
+        transform: translateY(8px);
       }
 
       to {
         opacity: 1;
+        transform: translateY(0);
       }
     }
 
     .message.user {
-      background: #3A3A3A;
-      color: #E8E8E8;
+      background: var(--spectrum-accent);
+      color: white;
       align-self: flex-end;
       margin-left: auto;
+      border-bottom-right-radius: var(--spectrum-radius-sm);
     }
 
     .message.assistant {
-      background: #2D2D2D;
-      color: #E8E8E8;
+      background: var(--spectrum-bg-layer-2);
+      color: var(--spectrum-text-primary);
       align-self: flex-start;
-      border: 1px solid #3A3A3A;
+      border: 1px solid var(--spectrum-border-color);
+      border-bottom-left-radius: var(--spectrum-radius-sm);
     }
 
     .message.error {
-      background: #3A2020;
-      border: 1px solid #FF3B30;
-      color: #FF6B6B;
+      background: rgba(227, 72, 80, 0.15);
+      border: 1px solid var(--spectrum-red-400);
+      color: var(--spectrum-red-400);
       align-self: flex-start;
     }
 
     .message.system {
-      background: #2D2D2D;
-      border: 1px solid #3A3A3A;
+      background: var(--spectrum-bg-layer-1);
+      border: 1px solid var(--spectrum-border-color);
       align-self: center;
       text-align: center;
-      font-size: 11px;
-      color: #B8B8B8;
+      font-size: var(--spectrum-font-size-xs);
+      color: var(--spectrum-text-secondary);
+      display: flex;
+      align-items: center;
+      gap: var(--spectrum-spacing-sm);
+      padding: var(--spectrum-spacing-sm) var(--spectrum-spacing-md);
+    }
+
+    .message.system .spectrum-icon {
+      color: var(--spectrum-accent);
+    }
+
+    .message.system.success .spectrum-icon {
+      color: var(--spectrum-green-400);
     }
 
     .message img {
       max-width: 100%;
-      border-radius: 2px;
-      margin-top: 6px;
-      border: 1px solid #3A3A3A;
+      border-radius: var(--spectrum-radius-sm);
+      margin-top: var(--spectrum-spacing-sm);
+      border: 1px solid var(--spectrum-border-color);
     }
 
     .message pre {
-      background: #1E1E1E;
-      padding: 6px;
-      border-radius: 2px;
+      background: var(--spectrum-gray-50);
+      padding: var(--spectrum-spacing-sm);
+      border-radius: var(--spectrum-radius-sm);
       overflow-x: auto;
-      margin: 6px 0;
-      border: 1px solid #3A3A3A;
-      font-size: 11px;
+      margin: var(--spectrum-spacing-sm) 0;
+      border: 1px solid var(--spectrum-border-color);
+      font-size: var(--spectrum-font-size-xs);
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
     }
 
+    /* ============================================
+       Input Section
+       ============================================ */
     .input-section {
-      background: #262626;
-      padding: 10px 12px;
-      border-top: 1px solid #3A3A3A;
+      background: var(--spectrum-bg-layer-1);
+      padding: var(--spectrum-spacing-md);
+      border-top: 1px solid var(--spectrum-border-color);
     }
 
+    /* ============================================
+       Quick Actions (Spectrum Clear Buttons)
+       ============================================ */
     .quick-actions {
       display: flex;
-      gap: 6px;
-      margin-bottom: 8px;
+      gap: var(--spectrum-spacing-sm);
+      margin-bottom: var(--spectrum-spacing-sm);
       flex-wrap: wrap;
     }
 
     .quick-btn {
-      padding: 4px 8px;
-      background: #2D2D2D;
-      border: 1px solid #3A3A3A;
-      color: #B8B8B8;
-      border-radius: 2px;
+      padding: var(--spectrum-spacing-xs) var(--spectrum-spacing-sm);
+      background: transparent;
+      border: 1px solid var(--spectrum-border-color);
+      color: var(--spectrum-text-secondary);
+      border-radius: var(--spectrum-radius-sm);
       cursor: pointer;
-      font-size: 10px;
-      transition: all 0.15s;
+      font-size: var(--spectrum-font-size-xs);
+      font-family: inherit;
+      transition: all var(--spectrum-transition-fast);
+      display: flex;
+      align-items: center;
+      gap: var(--spectrum-spacing-xs);
     }
 
     .quick-btn:hover {
-      background: #3A3A3A;
-      color: #E8E8E8;
+      background: var(--spectrum-gray-200);
+      border-color: var(--spectrum-border-color-hover);
+      color: var(--spectrum-text-primary);
     }
 
+    .quick-btn:active {
+      background: var(--spectrum-gray-300);
+    }
+
+    .quick-btn:focus-visible {
+      outline: none;
+      border-color: var(--spectrum-gray-500);
+    }
+
+    .quick-btn .spectrum-icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* ============================================
+       Input Group
+       ============================================ */
     .input-group {
       display: flex;
-      gap: 6px;
+      gap: var(--spectrum-spacing-sm);
       align-items: center;
     }
 
     .input-wrapper {
       flex: 1;
       position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--spectrum-bg-base);
+      border: 1px solid var(--spectrum-border-color);
+      border-radius: var(--spectrum-radius-md);
+      transition: all var(--spectrum-transition-fast);
+    }
+
+    .input-wrapper:hover {
+      border-color: var(--spectrum-border-color-hover);
+    }
+
+    .input-wrapper:focus-within {
+      border-color: var(--spectrum-gray-500);
     }
 
     textarea {
-      width: 100%;
-      padding: 5px 26px 5px 8px;
-      border: 1px solid #3A3A3A;
-      background: #1E1E1E;
-      color: #E8E8E8;
-      border-radius: 2px;
-      font-size: 12px;
+      flex: 1;
+      padding: var(--spectrum-spacing-sm) var(--spectrum-spacing-md);
+      padding-right: 36px;
+      border: none;
+      background: transparent;
+      color: var(--spectrum-text-primary);
+      font-size: var(--spectrum-font-size-sm);
       font-family: inherit;
       resize: none;
-      height: 32px;
-      min-height: 32px;
-      max-height: 80px;
-      line-height: 1.4;
+      height: 36px;
+      min-height: 36px;
+      max-height: 100px;
+      line-height: 1.5;
     }
 
     textarea::placeholder {
-      color: #6B6B6B;
+      color: var(--spectrum-text-muted);
     }
 
     textarea:focus {
       outline: none;
-      border-color: #6B6B6B;
     }
 
     .attach-btn {
       position: absolute;
-      right: 6px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
+      right: var(--spectrum-spacing-sm);
+      width: 24px;
+      height: 24px;
       background: transparent;
       border: none;
-      color: #6B6B6B;
+      color: var(--spectrum-text-muted);
       cursor: pointer;
-      border-radius: 2px;
-      transition: all 0.15s;
-      font-size: 12px;
+      border-radius: var(--spectrum-radius-sm);
+      transition: all var(--spectrum-transition-fast);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .attach-btn:hover {
-      background: #3A3A3A;
-      color: #B8B8B8;
+      background: var(--spectrum-gray-200);
+      color: var(--spectrum-text-secondary);
     }
 
+    .attach-btn .spectrum-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ============================================
+       Send Button
+       ============================================ */
     .send-btn {
-      padding: 0 14px;
-      background: #3A3A3A;
-      border: 1px solid #3A3A3A;
-      color: #E8E8E8;
-      border-radius: 2px;
+      padding: 0;
+      background: var(--spectrum-gray-200);
+      border: 1px solid var(--spectrum-border-color);
+      color: var(--spectrum-text-secondary);
+      border-radius: var(--spectrum-radius-md);
       cursor: pointer;
-      font-size: 12px;
-      font-weight: 400;
-      transition: all 0.15s;
-      min-width: 55px;
-      height: 32px;
+      font-size: var(--spectrum-font-size-sm);
+      font-weight: 500;
+      font-family: inherit;
+      transition: all var(--spectrum-transition-fast);
+      width: 36px;
+      height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -261,34 +467,50 @@
     }
 
     .send-btn:hover {
-      background: #4A4A4A;
+      background: var(--spectrum-gray-300);
+      color: var(--spectrum-text-primary);
     }
 
     .send-btn:active {
-      background: #3A3A3A;
+      background: var(--spectrum-gray-400);
+    }
+
+    .send-btn:focus-visible {
+      outline: none;
+      border-color: var(--spectrum-gray-500);
     }
 
     .send-btn:disabled {
-      opacity: 0.4;
+      opacity: 0.5;
       cursor: not-allowed;
     }
 
-    .loading {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      border: 2px solid #3A3A3A;
-      border-radius: 50%;
-      border-top-color: #B8B8B8;
-      animation: spin 0.6s linear infinite;
+    .send-btn .spectrum-icon svg {
+      width: 16px;
+      height: 16px;
     }
 
-    @keyframes spin {
+    /* ============================================
+       Loading Spinner
+       ============================================ */
+    .spectrum-loader {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spectrumSpin 0.8s linear infinite;
+    }
+
+    @keyframes spectrumSpin {
       to {
         transform: rotate(360deg);
       }
     }
 
+    /* ============================================
+       Modal (Spectrum Dialog)
+       ============================================ */
     .modal {
       display: none;
       position: fixed;
@@ -296,10 +518,11 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.6);
       z-index: 1000;
       align-items: center;
       justify-content: center;
+      backdrop-filter: blur(4px);
     }
 
     .modal.active {
@@ -307,183 +530,315 @@
     }
 
     .modal-content {
-      background: #2D2D2D;
-      border: 1px solid #3A3A3A;
-      border-radius: 2px;
+      background: var(--spectrum-bg-layer-1);
+      border: 1px solid var(--spectrum-border-color);
+      border-radius: var(--spectrum-radius-md);
       width: 90%;
-      max-width: 400px;
-      padding: 0;
+      max-width: 360px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      animation: modalSlideIn 0.2s ease-out;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
     }
 
     .modal-header {
-      padding: 12px;
-      border-bottom: 1px solid #3A3A3A;
+      padding: var(--spectrum-spacing-md) var(--spectrum-spacing-lg);
+      border-bottom: 1px solid var(--spectrum-border-color);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .modal-header h2 {
-      font-size: 12px;
-      font-weight: 400;
-      color: #E8E8E8;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
+      font-size: var(--spectrum-font-size-md);
+      font-weight: 600;
+      color: var(--spectrum-text-primary);
+      display: flex;
+      align-items: center;
+      gap: var(--spectrum-spacing-sm);
+    }
+
+    .modal-header h2 .spectrum-icon {
+      color: var(--spectrum-text-secondary);
     }
 
     .modal-close {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       background: transparent;
       border: none;
-      color: #B8B8B8;
+      color: var(--spectrum-text-secondary);
       cursor: pointer;
-      border-radius: 2px;
-      font-size: 16px;
+      border-radius: var(--spectrum-radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.15s;
+      transition: all var(--spectrum-transition-fast);
     }
 
     .modal-close:hover {
-      background: #3A3A3A;
-      color: #E8E8E8;
+      background: var(--spectrum-gray-200);
+      color: var(--spectrum-text-primary);
     }
 
     .modal-body {
-      padding: 16px 12px;
+      padding: var(--spectrum-spacing-lg);
     }
 
     .form-group {
-      margin-bottom: 12px;
+      margin-bottom: var(--spectrum-spacing-md);
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
     }
 
     .form-group label {
       display: block;
-      font-size: 11px;
-      color: #B8B8B8;
-      margin-bottom: 4px;
+      font-size: var(--spectrum-font-size-xs);
+      font-weight: 500;
+      color: var(--spectrum-text-secondary);
+      margin-bottom: var(--spectrum-spacing-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
 
     .form-group input {
       width: 100%;
-      padding: 6px 8px;
-      border: 1px solid #3A3A3A;
-      background: #1E1E1E;
-      color: #E8E8E8;
-      border-radius: 2px;
-      font-size: 12px;
+      padding: var(--spectrum-spacing-sm) var(--spectrum-spacing-md);
+      border: 1px solid var(--spectrum-border-color);
+      background: var(--spectrum-bg-base);
+      color: var(--spectrum-text-primary);
+      border-radius: var(--spectrum-radius-sm);
+      font-size: var(--spectrum-font-size-sm);
+      font-family: inherit;
+      transition: all var(--spectrum-transition-fast);
+    }
+
+    .form-group input:hover {
+      border-color: var(--spectrum-border-color-hover);
     }
 
     .form-group input:focus {
       outline: none;
-      border-color: #6B6B6B;
+      border-color: var(--spectrum-accent);
+      box-shadow: 0 0 0 1px var(--spectrum-accent);
     }
 
     .status-text {
-      font-size: 10px;
-      color: #6B6B6B;
-      margin-top: 4px;
+      font-size: var(--spectrum-font-size-xs);
+      color: var(--spectrum-text-muted);
+      margin-top: var(--spectrum-spacing-xs);
+      display: flex;
+      align-items: center;
+      gap: var(--spectrum-spacing-xs);
     }
 
     .status-text.success {
-      color: #5ECB5C;
+      color: var(--spectrum-green-400);
     }
 
     .modal-footer {
-      padding: 12px;
-      border-top: 1px solid #3A3A3A;
+      padding: var(--spectrum-spacing-md) var(--spectrum-spacing-lg);
+      border-top: 1px solid var(--spectrum-border-color);
       display: flex;
       justify-content: flex-end;
-      gap: 8px;
+      gap: var(--spectrum-spacing-sm);
     }
 
+    /* ============================================
+       Button Variants
+       ============================================ */
     .btn-secondary {
-      padding: 6px 12px;
+      padding: var(--spectrum-spacing-sm) var(--spectrum-spacing-md);
       background: transparent;
-      border: 1px solid #3A3A3A;
-      color: #B8B8B8;
-      border-radius: 2px;
+      border: 1px solid var(--spectrum-border-color);
+      color: var(--spectrum-text-secondary);
+      border-radius: var(--spectrum-radius-sm);
       cursor: pointer;
-      font-size: 12px;
-      transition: all 0.15s;
+      font-size: var(--spectrum-font-size-sm);
+      font-family: inherit;
+      transition: all var(--spectrum-transition-fast);
     }
 
     .btn-secondary:hover {
-      background: #3A3A3A;
-      color: #E8E8E8;
+      background: var(--spectrum-gray-200);
+      color: var(--spectrum-text-primary);
     }
 
     .btn-primary {
-      padding: 6px 12px;
-      background: #3A3A3A;
-      border: 1px solid #3A3A3A;
-      color: #E8E8E8;
-      border-radius: 2px;
+      padding: var(--spectrum-spacing-sm) var(--spectrum-spacing-md);
+      background: var(--spectrum-accent);
+      border: none;
+      color: white;
+      border-radius: var(--spectrum-radius-sm);
       cursor: pointer;
-      font-size: 12px;
-      transition: all 0.15s;
+      font-size: var(--spectrum-font-size-sm);
+      font-weight: 500;
+      font-family: inherit;
+      transition: all var(--spectrum-transition-fast);
     }
 
     .btn-primary:hover {
-      background: #4A4A4A;
+      background: var(--spectrum-accent-hover);
     }
 
     .hidden {
-      display: none;
+      display: none !important;
     }
   </style>
 </head>
 
 <body>
+  <!-- Header -->
   <div class="header">
+    <div class="header-title">
+      <span class="spectrum-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        </svg>
+      </span>
+      AI Assistant
+    </div>
     <div class="header-actions">
-      <button class="icon-btn" id="newChatBtn" title="New Chat">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M2 2h12v12H2z" />
-          <path d="M8 5v6M5 8h6" />
-        </svg>
+      <button class="action-btn" id="newChatBtn" title="New Chat">
+        <span class="spectrum-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+          </svg>
+        </span>
       </button>
-      <button class="icon-btn" id="settingsBtn" title="Settings">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-          <path
-            d="M14 7h-1.1c-.1-.4-.3-.7-.5-1l.8-.8-.7-.7-.8.8c-.3-.2-.6-.4-1-.5V3h-1v1.1c-.4.1-.7.3-1 .5l-.8-.8-.7.7.8.8c-.2.3-.4.6-.5 1H3v1h1.1c.1.4.3.7.5 1l-.8.8.7.7.8-.8c.3.2.6.4 1 .5V13h1v-1.1c.4-.1.7-.3 1-.5l.8.8.7-.7-.8-.8c.2-.3.4-.6.5-1H14V7zm-6 2c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
-        </svg>
+      <button class="action-btn" id="settingsBtn" title="Settings">
+        <span class="spectrum-icon">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
+          </svg>
+        </span>
       </button>
     </div>
   </div>
 
+  <!-- Chat Container -->
   <div class="chat-container" id="chatContainer"></div>
 
+  <!-- Input Section -->
   <div class="input-section">
     <div class="quick-actions">
-      <button class="quick-btn" data-action="analyze">Analyze Artboard</button>
-      <button class="quick-btn" data-action="analyze-selection">Analyze Selection</button>
-      <button class="quick-btn" data-action="generate">Generate Image</button>
-      <button class="quick-btn" data-action="colors">Color Palette</button>
-      <button class="quick-btn" data-action="improve">Suggestions</button>
+      <button class="quick-btn" data-action="analyze">
+        <span class="spectrum-icon">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+          </svg>
+        </span>
+        Analyze Artboard
+      </button>
+      <button class="quick-btn" data-action="analyze-selection">
+        <span class="spectrum-icon">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M3 5h2V3c-1.1 0-2 .9-2 2zm0 8h2v-2H3v2zm4 8h2v-2H7v2zM3 9h2V7H3v2zm10-6h-2v2h2V3zm6 0v2h2c0-1.1-.9-2-2-2zM5 21v-2H3c0 1.1.9 2 2 2zm-2-4h2v-2H3v2zM9 3H7v2h2V3zm2 18h2v-2h-2v2zm8-8h2v-2h-2v2zm0 8c1.1 0 2-.9 2-2h-2v2zm0-12h2V7h-2v2zm0 8h2v-2h-2v2zm-4 4h2v-2h-2v2zm0-16h2V3h-2v2z" />
+          </svg>
+        </span>
+        Selection
+      </button>
+      <button class="quick-btn" data-action="generate">
+        <span class="spectrum-icon">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z" />
+          </svg>
+        </span>
+        Generate
+      </button>
+      <button class="quick-btn" data-action="colors">
+        <span class="spectrum-icon">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
+          </svg>
+        </span>
+        Colors
+      </button>
+      <button class="quick-btn" data-action="improve">
+        <span class="spectrum-icon">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6A4.997 4.997 0 017 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z" />
+          </svg>
+        </span>
+        Suggestions
+      </button>
     </div>
     <div class="input-group">
       <div class="input-wrapper">
-        <textarea id="userInput" placeholder="Ask me anything..." rows="1"></textarea>
-        <button class="attach-btn" id="attachBtn" title="Attach artboard">📎</button>
+        <textarea id="userInput" placeholder="Describe what you want to create or ask about your design..."
+          rows="1"></textarea>
+        <button class="attach-btn" id="attachBtn" title="Capture artboard">
+          <span class="spectrum-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
+            </svg>
+          </span>
+        </button>
       </div>
-      <button class="send-btn" id="sendBtn">Send</button>
+      <button class="send-btn" id="sendBtn" title="Send">
+        <span class="spectrum-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" />
+          </svg>
+        </span>
+      </button>
     </div>
   </div>
 
+  <!-- Settings Modal -->
   <div class="modal" id="settingsModal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2>Settings</h2>
-        <button class="modal-close" id="closeSettingsBtn">×</button>
+        <h2>
+          <span class="spectrum-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
+            </svg>
+          </span>
+          Settings
+        </h2>
+        <button class="modal-close" id="closeSettingsBtn">
+          <span class="spectrum-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+            </svg>
+          </span>
+        </button>
       </div>
       <div class="modal-body">
         <div class="form-group">
           <label>Gemini API Key</label>
           <input type="password" id="apiKeyInput" placeholder="Enter your API key..." autocomplete="off" />
-          <div class="status-text" id="apiStatus">Not configured</div>
+          <div class="status-text" id="apiStatus">
+            <span class="spectrum-icon spectrum-icon--sm">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+              </svg>
+            </span>
+            Not configured
+          </div>
         </div>
       </div>
       <div class="modal-footer">
