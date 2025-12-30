@@ -253,11 +253,6 @@ Check for updates regularly at the project repository to get:
 - Bug fixes
 - Enhanced AI models
 
-## 🐛 Known Issues
-
-- ExtendScript TypeScript warnings (expected, can be ignored)
-- Large artboards may take longer to capture
-- Generated images are watermarked with SynthID
 
 ## 💬 Support
 
