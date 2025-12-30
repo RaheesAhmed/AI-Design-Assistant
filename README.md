@@ -254,38 +254,11 @@ Check for updates regularly at the project repository to get:
 - Enhanced AI models
 
 
-## 💬 Support
-
-For issues, questions, or feature requests:
-1. Check this README thoroughly
-2. Review the troubleshooting section
-3. Check Google AI Studio documentation
-4. Verify your API key is valid
 
 ## 📝 License
 
 This extension is provided as-is for personal and commercial use.
 Gemini API usage is subject to Google's terms of service.
-
-## 🙏 Credits
-
-- **AI Model:** Google Gemini 2.5 Flash
-- **Framework:** Adobe CEP (Common Extensibility Platform)
-- **Design:** Custom gradient UI
-
----
-
-## 🚀 Quick Start Checklist
-
-- [ ] Install extension using INSTALL_AI_ASSISTANT.bat
-- [ ] Get Gemini API key from Google AI Studio
-- [ ] Open Adobe Illustrator
-- [ ] Open extension: Window → Extensions → AI Design Assistant
-- [ ] Enter and save API key
-- [ ] Try a quick action button
-- [ ] Start creating with AI!
-
----
 
 **Made with ❤️ for designers who love AI**
 
